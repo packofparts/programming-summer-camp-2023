@@ -2,7 +2,7 @@
 public class Day2Excercises {
     String name = "Bob";
     public static void main(String[] args) throws Exception {
-
+        evenTilNum(17);
     }
 
     //Easy excercises 
@@ -46,6 +46,66 @@ public class Day2Excercises {
 
     //Medium Excercises
     //Write a method that changes an Array using parameters in the method - change wording later
+    public static void incrementArray(int add, int[] arr){
+        for(int i = 0; i < arr.length; i++){ // -> discuss difference bewtwen length and length()
+            arr[i] += add;
+        }
+    }
+
+    //Write a method that returns the smallest of three integer parameters
+    public static int findMin(int a, int b, int c){
+        if ((a < b) && (b < c)) {
+            return a;
+        } else if ((b < a) && (b < c)) {
+            return b;
+        } else {
+            return c;
+        }
+    }
+
+    //Write a method that checks whether a certain person's inputted birth year makes them younger or older than you
+    //In this case I'm returning boolesns, but there are many different options for return values here and in other methods as well
+    //I'm also only using one parameter because of what the prompt is asking for, but there can also be a comparison bewteen two parameters
+    public static boolean olderOrYounger(int userYear) {
+        return userYear < 2005; //True if older, and False if younger
+                                //This is also an example of boolean zen
+    }
+
+    //Hard excercises
+    //Write a method that takes in an Array/Array List and prints out all its items
+    public static void printList(String[] arr) {
+        for (String str : arr) {
+            System.out.println(str);
+        }
+    }
+
+    //Write a method that prints out all the even numbers before an inputted number
+    public static void evenTilNum(int num){
+        if (num%2 == 1) {
+            num++;
+        }
+        int temp = num;
+        while ((num - temp) < num ){
+            System.out.println(num-temp);
+            temp -= 2;
+        }
+    }
+
+    //Write a method that calculates the area of a square
+    //Lots of assumptions here, but assuming that the method is given an int side length, here's a couple options on how to do it
+    public static int squareArea(int side){
+        return side*side;
+        //return Math.pow((side), 2); is also another form of squaring a value
+    }
+
+    //Write a method that uses a WHILE loop to print out all the numbers between an inputted number and its double.
+    public static void numCounter(int num) {
+        int dub = 2*num; 
+        num++;
+        while (num < dub){
+            System.out.println(num);
+        }
+    }
 
 
 }
