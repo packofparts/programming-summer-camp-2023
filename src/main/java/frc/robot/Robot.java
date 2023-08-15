@@ -8,92 +8,45 @@ import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 import edu.wpi.first.wpilibj.internal.DriverStationModeThread;
+import edu.wpi.first.wpilibj.romi.RomiGyro;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.Drive;
+import frc.robot.subsystems.Drivetrain;
+
+
+
 
 /**
  * The VM is configured to automatically run this class. If you change the name of this class or the
  * package after creating this project, you must also update the build.gradle file in the project.
  */
-public class Robot extends RobotBase {
-  public void robotInit() {}
+public class Robot extends TimedRobot {
+  
+  RomiGyro gyro = new RomiGyro();
+  Drivetrain drivetrain = new Drivetrain();
 
-  public void disabled() {}
-
-  public void autonomous() {}
-
-  public void teleop() {}
-
-  public void test() {}
-
-  private volatile boolean m_exit;
-
-  @Override
-  public void startCompetition() {
-    robotInit();
-
-    DriverStationModeThread modeThread = new DriverStationModeThread();
-
-    int event = WPIUtilJNI.createEvent(false, false);
-
-    DriverStation.provideRefreshedDataEventHandle(event);
-
-    // Tell the DS that the robot is ready to be enabled
-    DriverStationJNI.observeUserProgramStarting();
-
-    while (!Thread.currentThread().isInterrupted() && !m_exit) {
-      if (isDisabled()) {
-        modeThread.inDisabled(true);
-        disabled();
-        modeThread.inDisabled(false);
-        while (isDisabled()) {
-          try {
-            WPIUtilJNI.waitForObject(event);
-          } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-          }
-        }
-      } else if (isAutonomous()) {
-        modeThread.inAutonomous(true);
-        autonomous();
-        modeThread.inAutonomous(false);
-        while (isAutonomousEnabled()) {
-          try {
-            WPIUtilJNI.waitForObject(event);
-          } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-          }
-        }
-      } else if (isTest()) {
-        modeThread.inTest(true);
-        test();
-        modeThread.inTest(false);
-        while (isTest() && isEnabled()) {
-          try {
-            WPIUtilJNI.waitForObject(event);
-          } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-          }
-        }
-      } else {
-        modeThread.inTeleop(true);
-        teleop();
-        modeThread.inTeleop(false);
-        while (isTeleopEnabled()) {
-          try {
-            WPIUtilJNI.waitForObject(event);
-          } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-          }
-        }
-      }
-    }
-
-    DriverStation.removeRefreshedDataEventHandle(event);
-    modeThread.close();
+  public void robotInit() {
+    drivetrain.setDefaultCommand(new Drive(drivetrain));
   }
 
   @Override
-  public void endCompetition() {
-    m_exit = true;
+  public void robotPeriodic() {
+    CommandScheduler.getInstance().run();
+
   }
+
+  @Override
+  public void autonomousInit() {
+    
+  }
+
+  @Override
+  public void autonomousPeriodic() {
+    
+  }
+  
+
 }
