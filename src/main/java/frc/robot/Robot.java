@@ -39,6 +39,11 @@ public class Robot extends TimedRobot {
   }
 
   @Override
+  public void disabledInit() {
+      drivetrain.reset();
+  }
+
+  @Override
   public void autonomousInit() {
     
   }

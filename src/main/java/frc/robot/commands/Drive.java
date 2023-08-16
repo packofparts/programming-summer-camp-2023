@@ -25,7 +25,7 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(driveStick.getY()/4, driveStick.getX()/4, true);
+    drivetrain.drive(driveStick.getY()/3, driveStick.getX()/3, false);
   }
 
   // Called once the command ends or is interrupted.

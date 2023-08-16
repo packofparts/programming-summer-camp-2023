@@ -4,8 +4,11 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.hal.simulation.RoboRioDataJNI;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,22 +25,40 @@ public class Drivetrain extends SubsystemBase{
 
   Odometry odo;
 
+  Field2d field;
+
   public Drivetrain() {
     leftMotor.setInverted(true);
 
     leftEncoder.setDistancePerPulse(Constants.kWheelCircumference / Constants.kPulsesPerRevolution);
     rightEncoder.setDistancePerPulse(Constants.kWheelCircumference / Constants.kPulsesPerRevolution);
-  
+    leftEncoder.reset();
+    rightEncoder.reset();
+
+
     odo = new Odometry();
+    field = new Field2d();
+
+    SmartDashboard.putData("Field", field);
+  }
+
+  public void reset(){
+    leftEncoder.reset();
+    rightEncoder.reset();
+    odo.reset();
   }
 
   @Override
   public void periodic() {
     odo.update(leftEncoder.getDistance(), rightEncoder.getDistance());
+    field.setRobotPose(odo.getXPos()/100, odo.getYPos()/100, Rotation2d.fromRadians(odo.getRadians()));
 
     SmartDashboard.putNumber("xPos", odo.getXPos());
     SmartDashboard.putNumber("yPos", odo.getYPos());
     SmartDashboard.putNumber("Radians", odo.getRadians());
+
+    SmartDashboard.putNumber("LeftDistance", getLeftDistance());
+    SmartDashboard.putNumber("RightDistance", getRightDistance());
   }
 
   public void setMotors(double left, double right){

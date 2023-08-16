@@ -14,6 +14,12 @@ public class Odometry {
 
     }
 
+    public void reset(){
+        xPosition = 0;
+        yPosition = 0;
+        accumulatedRadians = 0;
+    }
+
     public Odometry(double initX, double initY, double initRot){
         xPosition = initX;
         yPosition = initY;
@@ -29,16 +35,12 @@ public class Odometry {
         double dRadians = (dRight - dLeft) / Constants.kDistanceBetweenWheelsCM;
 
         SmartDashboard.putNumber("dRadians", dRadians);
-
-
-        if (Math.abs(dRadians) <= 0.000001){
-            double radius = dCenter / dRadians;
-
-            xPosition += radius * Math.cos(dRadians);
-            yPosition += radius * Math.sin(dRadians);
-        }
-
+        
+     
+        xPosition += dCenter * Math.cos(accumulatedRadians + dRadians / 2);
+        yPosition += dCenter * Math.sin(accumulatedRadians + dRadians / 2);
         accumulatedRadians += dRadians;
+        
 
         prevLeftDistance = leftDistance;
         prevRightDistance = rightDistance;
