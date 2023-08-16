@@ -46,6 +46,27 @@ public class Odometry {
         prevRightDistance = rightDistance;
     }
 
+    public double[] inverseKinematics(double desiredX, double desiredY){
+
+        double dx = desiredX - xPosition;
+        double dy = desiredY - yPosition;
+        
+        double v = Math.sqrt(dx * dx + dy * dy);
+
+        
+        double w = angleDifference(accumulatedRadians, Math.atan2(dy, dx));
+        
+
+        double vL =  (2.0 * 1.0 - w * Constants.kDistanceBetweenWheelsCM * Constants.kTurnFactor) / 2.0;
+        double vR = (w * Constants.kDistanceBetweenWheelsCM * Constants.kTurnFactor + 2.0 * 1.0) / 2.0;
+
+        SmartDashboard.putNumber("LeftVel", vL);
+        SmartDashboard.putNumber("RightVel", vR);
+
+        return new double[]{vL, vR};
+    }
+
+
     public double getXPos(){
         return xPosition;
     }
@@ -56,6 +77,12 @@ public class Odometry {
 
     public double getRadians(){
         return accumulatedRadians;
+    }
+
+    public static double angleDifference( double angle1, double angle2 )
+    {
+        double diff = ( angle2 - angle1 + Math.PI ) % (2*Math.PI) - Math.PI;
+        return diff < -Math.PI ? diff + 2*Math.PI : diff;
     }
 
 }
