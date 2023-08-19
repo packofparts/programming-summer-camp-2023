@@ -1,6 +1,5 @@
 
 public class Day2Excercises {
-    String name = "Bob";
     public static void main(String[] args) throws Exception {
         evenTilNum(17);
     }
@@ -31,17 +30,6 @@ public class Day2Excercises {
         String[] messages = {"You're great!", "Stay positive", "You bring sunshine to people's days!"};
         int choice = (int)(Math.random()*10)/4;
         System.out.println(messages[choice]);
-    }
-
-    //Write a method that assigns parameter values to variables in the method -Wot? - give off setter vibes, that's day 3 remove later
-    //Easier lang - create a setter/getter method
-    //This example can also add a bit about scope
-    public String getName(){
-        return this.name;
-    }
-
-    public void setName(String name){
-        this.name = name;
     }
 
     //Medium Excercises
@@ -106,6 +94,4 @@ public class Day2Excercises {
             System.out.println(num);
         }
     }
-
-
 }
