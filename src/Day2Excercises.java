@@ -13,15 +13,6 @@ public class Day2Excercises {
 
     //Write a method in java that finds the length of a string taken in as a parameter
     public int stringLength(String str){
-        //In this case the .length() function already exists, however in the case that it didn't, here is an alternate method to do so
-        /*int count = 0;
-        char[] chars = str.toCharArray();
-        for (char c : chars){
-            count++;
-        }
-        return count;
-        */
-        //The kids won't know that though, so this is what they'll probably end up using:
         return str.length();
     }
 
@@ -94,4 +85,30 @@ public class Day2Excercises {
             System.out.println(num);
         }
     }
+
+    //Challenge problems
+    //NOTE: just because this is how these answers were written here does not mean that they are the only correct answers
+    //check the length of a string without using the .length() method
+    public int stringLengthChallenge(String str) {
+        int count = 0;
+        char[] chars = str.toCharArray();
+        for (char c : chars){
+            count++;
+        }
+        return count;
+    }
+ 
+    //checking to see if a word is a palindrome
+    public static boolean isPalindrome(String str) {
+        for(int i = 0; i < str.length()/2; i++) {
+            if (str.charAt(i) != str.charAt(str.length()-i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+
 }
