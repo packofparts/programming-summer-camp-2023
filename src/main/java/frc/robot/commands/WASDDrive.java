@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -26,14 +27,16 @@ public class WASDDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
-
+ 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double xInput = joystick.getX();
     double yInput = joystick.getY();
 
-    ChassisSpeeds desiredChassisSpeeds = new ChassisSpeeds(-yInput*0.7, 0, -xInput*Math.PI);
+    ChassisSpeeds desiredChassisSpeeds = new ChassisSpeeds(-yInput*0.7, 0, -xInput*2*Math.PI);
+    
+    //ChassisSpeeds desiredChassisSpeeds = new ChassisSpeeds(-yInput*0.7, 0, pid.calculate(drive.gyro.getRotation2d().getRadians(), 0));
     DifferentialDriveWheelSpeeds speeds = kinematics.toWheelSpeeds(desiredChassisSpeeds);
 
     drive.setMotors(speeds.leftMetersPerSecond, speeds.rightMetersPerSecond);

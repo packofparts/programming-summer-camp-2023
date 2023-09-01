@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DriveForward;
-import frc.robot.commands.PID;
+import frc.robot.commands.MoveTo;
 import frc.robot.commands.Rotate;
 import frc.robot.commands.WASDDrive;
 import frc.robot.subsystems.Drivetrain;
@@ -29,9 +29,10 @@ public class Robot extends TimedRobot {
   
   
   //initialize commands
-  private DriveForward driveForward = new DriveForward(drivetrain);
+  private DriveForward driveForward = new DriveForward(drivetrain, 12);
   private Rotate rotate = new Rotate(drivetrain, 90);
-  private PID pid = new PID(drivetrain, 24);
+  //private PID pid = new PID(drivetrain, 24.0);
+  private MoveTo moveto = new MoveTo(drivetrain, .5, 0);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -76,7 +77,8 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     //driveForward.schedule();
     //rotate.schedule();
-    pid.schedule();
+    //pid.schedule();
+    moveto.schedule();
   }
 
   /** This function is called periodically during autonomous. */
